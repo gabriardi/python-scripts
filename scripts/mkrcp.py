@@ -64,7 +64,7 @@ style_extension = ".scss"  # defalut stylesheet type
 output = ""
 
 if not args.lower:
-    component = component.capitalize()
+    component = component[0].upper() + component[1:]
 
 if args.path:
     path = PurePath(args.path).joinpath(component)
