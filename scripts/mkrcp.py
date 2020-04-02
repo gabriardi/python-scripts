@@ -12,10 +12,11 @@ from argparse import RawTextHelpFormatter
 
 description = """
 Create a new React Component Folder with files.
-By default the first letter of the component will be capitalized and a Sass module file will be created
+By default the first letter of the component will be capitalized and a Sass module
+and a package.json will be created.
 -
 Example: mkrcp Component
-This will create Component.jsx and Component.module.scss inside ./src/components/Component
+This will create Component.jsx, Component.module.scss and a package.json inside ./src/components/Component
 -
 """
 
@@ -37,7 +38,10 @@ parser.add_argument(
     action="store_true",
 )
 parser.add_argument(
-    "-n", "--nostyle", help="no stylesheet file will be created", action="store_true"
+    "-ns", "--nostyle", help="no stylesheet module will be created", action="store_true"
+)
+parser.add_argument(
+    "-nj", "--nojson", help="no package.json will be created", action="store_true"
 )
 parser.add_argument(
     "-l",
@@ -81,12 +85,18 @@ Path(path).mkdir(mode=0o755, parents=True, exist_ok=True)
 # Create jsx file
 Path(PurePath(path).joinpath(component + ".jsx")).touch(mode=0o644, exist_ok=True)
 output = f"{component}.jsx created inside {path}"
-# Create style file
+# Create style module
 if style_extension:
     Path(PurePath(path).joinpath(component + ".module" + style_extension)).touch(
         mode=0o644, exist_ok=True
     )
     output += f"\n{component}{style_extension} created inside {path}"
+# Create package.json file
+if not args.nojson:
+    Path(PurePath(path).joinpath("package.json")).write_text(
+        "{\n\t" + f'"main": "{component}.jsx"' + "\n}"
+    )
+    output += f"\npackage.json created inside {path}"
 
 if not args.quiet:
     print(output)

@@ -16,8 +16,10 @@ This will simply copy everything from the scripts folder to /usr/local/bin/
 
 ### Simple script to create a new React Component folder and relative files
 
-This will create `./src/components/NewComponent/NewComponent.jsx`
-and `./src/components/NewComponent/NewComponent.module.scss`
+This will create:
+<br>`./src/components/NewComponent/NewComponent.jsx`
+<br>`./src/components/NewComponent/NewComponent.module.scss`
+<br>`./src/components/NewComponent/package.json`
 
 ```bash
 mkrcp NewComponent
