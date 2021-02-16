@@ -38,6 +38,12 @@ parser.add_argument(
     action="store_true",
 )
 parser.add_argument(
+    "-js",
+    "--jsextention",
+    help="create a component with .js extention",
+    action="store_true",
+)
+parser.add_argument(
     "-ns", "--nostyle", help="no stylesheet module will be created", action="store_true"
 )
 parser.add_argument(
@@ -61,6 +67,7 @@ args = parser.parse_args()
 
 component = args.component
 style_extension = ".scss"  # defalut stylesheet type
+component_extension = ".jsx"  # defalut component extention
 output = ""
 
 if not args.lower:
@@ -77,14 +84,17 @@ if args.css:
 if args.scss:
     style_extension = ".scss"
 
+if args.jsextention:
+    component_extension = ".js"
+
 if args.nostyle:
     style_extension = False
 
 # Create directory
 Path(path).mkdir(mode=0o755, parents=True, exist_ok=True)
-# Create jsx file
-Path(PurePath(path).joinpath(component + ".jsx")).touch(mode=0o644, exist_ok=True)
-output = f"{component}.jsx created inside {path}"
+# Create component file
+Path(PurePath(path).joinpath(component + component_extension)).touch(mode=0o644, exist_ok=True)
+output = f"{component}{component_extension} created inside {path}"
 # Create style module
 if style_extension:
     Path(PurePath(path).joinpath(component + ".module" + style_extension)).touch(
@@ -94,7 +104,7 @@ if style_extension:
 # Create package.json file
 if not args.nojson:
     Path(PurePath(path).joinpath("package.json")).write_text(
-        "{\n\t" + f'"main": "{component}.jsx"' + "\n}"
+        "{\n\t" + f'"main": "{component}{component_extension}"' + "\n}"
     )
     output += f"\npackage.json created inside {path}"
 
