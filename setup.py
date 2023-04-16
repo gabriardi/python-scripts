@@ -10,7 +10,7 @@ from pathlib import Path, PurePath
 from shutil import copyfile
 
 from_folder = Path("./scripts")
-to_folder = Path("/usr/local/bin")
+to_folder = Path("~/.local/bin")
 permissions = 0o755  # rwxrxrx
 
 all_scripts = list(from_folder.glob("**/*.py"))
